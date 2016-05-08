@@ -14,6 +14,7 @@ import GLKit
 
 class ResultViewController: UIViewController {
 
+    let ocrInstance = SwiftOCR()
     var stillImageOutput: AVCaptureStillImageOutput?
     var clippedRect: CGRect = CGRect.zero
 
@@ -32,7 +33,7 @@ class ResultViewController: UIViewController {
 
 
     @IBAction func onDoneTap() {
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        dismiss()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -41,6 +42,9 @@ class ResultViewController: UIViewController {
         startProcessing()
     }
 
+    private func dismiss() {
+        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
 
 private extension ResultViewController {
@@ -49,8 +53,8 @@ private extension ResultViewController {
     private func startProcessing() {
         if let output = stillImageOutput {
             processStreamCapture(output)
-        } else if let image = UIImage(named: "lines") {
-            processImage(image)
+        } else if let image = UIImage(named: "placeholder") {
+            processImage(image, crop: false)
         } else {
             updateStatus("No image found")
         }
@@ -69,27 +73,48 @@ private extension ResultViewController {
                 return
             }
 
-            self?.processImage(image)
+            self?.processImage(image, crop: true)
         }
     }
 
-    private func processImage(image: UIImage) {
+    private func processImage(image: UIImage, crop: Bool) {
         updateStatus("Processing 1/3 ...", image: image)
 
-        guard let cropImg = image.crop(CGRectGetHeight(clippedRect)) else {
-            return
+        var cropImg = image
+        if crop {
+            if let c = image.crop(CGRectGetHeight(clippedRect)) {
+                cropImg = c
+            }
         }
 
         updateStatus("Processing 2/3 ...", image: cropImg)
 
-        let ocrInstance = SwiftOCR()
         ocrInstance.image = cropImg
+        guard let processedImg = ocrInstance.preprocessImageForOCR(nil) else {
+            return
+        }
+
+        updateStatus("Processing 3/3 ...", image: processedImg)
+
+        let alert = UIAlertController(title: "Good enough?", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { [weak self] _ in
+            self?.recognizeImage()
+            })
+        )
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { [weak self] _ in
+            self?.dismiss()
+            })
+        )
+        presentViewController(alert, animated: true, completion: nil)
+    }
+
+    private func recognizeImage() {
         ocrInstance.recognize() { [weak self] recognizedString in
             dispatch_async(dispatch_get_main_queue(), {
                 if recognizedString.characters.isEmpty {
-                    self?.updateStatus("Can't read!", image: cropImg)
+                    self?.updateStatus("Can't read!", image: self?.ocrInstance.image)
                 } else {
-                    self?.updateStatus(recognizedString, image: cropImg)
+                    self?.updateStatus(recognizedString, image: self?.ocrInstance.image)
                 }
             })
         }

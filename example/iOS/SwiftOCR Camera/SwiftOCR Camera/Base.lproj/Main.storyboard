@@ -88,7 +88,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="egP-93-WjV">
-                                <rect key="frame" x="16" y="278" width="343" height="112"/>
+                                <rect key="frame" x="16" y="277.5" width="343" height="112"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCO-7R-Ale">
                                 <rect key="frame" x="0.0" y="638" width="375" height="29"/>
@@ -108,6 +108,7 @@
                             <constraint firstItem="egP-93-WjV" firstAttribute="centerY" secondItem="N8s-H2-ZgG" secondAttribute="centerY" id="8qY-XZ-MrF"/>
                             <constraint firstItem="nxS-hn-SqN" firstAttribute="centerY" secondItem="N8s-H2-ZgG" secondAttribute="centerY" id="IxY-Wy-Slx"/>
                             <constraint firstItem="nxS-hn-SqN" firstAttribute="centerX" secondItem="N8s-H2-ZgG" secondAttribute="centerX" id="JS8-Wm-6Gl"/>
+                            <constraint firstItem="egP-93-WjV" firstAttribute="top" secondItem="4ex-gX-RDz" secondAttribute="bottom" constant="60" id="Rpd-Ww-tnY"/>
                             <constraint firstAttribute="trailing" secondItem="zCO-7R-Ale" secondAttribute="trailing" id="UYh-7d-adL"/>
                             <constraint firstItem="zCO-7R-Ale" firstAttribute="leading" secondItem="N8s-H2-ZgG" secondAttribute="leadingMargin" constant="40" id="WfO-Ws-LhV"/>
                             <constraint firstItem="nxS-hn-SqN" firstAttribute="leading" secondItem="N8s-H2-ZgG" secondAttribute="leading" id="YRY-Va-71s"/>
@@ -121,12 +122,15 @@
                             <constraint firstItem="egP-93-WjV" firstAttribute="leading" secondItem="N8s-H2-ZgG" secondAttribute="leadingMargin" id="fHF-iB-Q2U"/>
                             <constraint firstItem="YdD-qm-cuZ" firstAttribute="top" secondItem="zCO-7R-Ale" secondAttribute="bottom" id="lHT-3D-pNT"/>
                             <constraint firstItem="zCO-7R-Ale" firstAttribute="centerY" secondItem="N8s-H2-ZgG" secondAttribute="centerY" id="m5f-ME-enf"/>
+                            <constraint firstItem="egP-93-WjV" firstAttribute="centerY" secondItem="N8s-H2-ZgG" secondAttribute="centerY" id="zXY-2A-Ffg"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="IxY-Wy-Slx"/>
                                 <exclude reference="JS8-Wm-6Gl"/>
                                 <exclude reference="2Ku-PX-3Vc"/>
+                                <exclude reference="8qY-XZ-MrF"/>
+                                <exclude reference="Rpd-Ww-tnY"/>
                                 <exclude reference="WfO-Ws-LhV"/>
                                 <exclude reference="cdH-Aa-NXN"/>
                                 <exclude reference="ciC-fo-LEK"/>
